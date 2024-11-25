@@ -3,15 +3,16 @@ import Options from "./components/Options/Options";
 import Feedback from "./components/Feedback/Feedback";
 import Notification from "./components/Notification/Notification";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import "./App.css";
 
 const App = () => {
-  const [feedback, setFeedback] = useState({
-    good: 0,
-    neutral: 0,
-    bad: 0,
+  const [feedback, setFeedback] = useState(() => {
+    const savedFeedback = localStorage.getItem("savedFeedback");
+    return savedFeedback
+      ? JSON.parse(savedFeedback)
+      : { good: 0, neutral: 0, bad: 0 };
   });
   const [isHiden, setIsHiden] = useState(false);
 
@@ -30,6 +31,10 @@ const App = () => {
     setFeedback({ good: 0, neutral: 0, bad: 0 });
     setIsHiden(false);
   };
+
+  useEffect(() => {
+    window.localStorage.setItem("savedFeedback", JSON.stringify(feedback));
+  }, [feedback]);
 
   const totalFeedback = feedback.good + feedback.neutral + feedback.bad;
   const positiveFeedback = Math.round((feedback.good / totalFeedback) * 100);

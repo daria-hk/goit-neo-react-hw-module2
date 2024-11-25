@@ -17,15 +17,3 @@ const Options = ({ totalFeedback, updateFeedback, handleResetFeedback }) => {
 };
 
 export default Options;
-
-//  const handleResetFeedback = () => {
-//  setClicks({ good: 0, neutral: 0, bad: 0 });
-// };
-
-//      <OptionButton onClick={handleResetFeedback}>Reset</OptionButton>
-
-// <div>Total Clicks: {clicks.good + clicks.neutral + clicks.bad}</div>
-
-/**
- * {isOpen ? "Hide" : "Show"}
- */

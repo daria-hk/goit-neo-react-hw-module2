@@ -29,7 +29,7 @@ const App = () => {
 
   const handleResetFeedback = () => {
     setFeedback({ good: 0, neutral: 0, bad: 0 });
-    setIsHiden(false);
+    setIsHiden(isHiden);
   };
 
   useEffect(() => {

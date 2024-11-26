@@ -14,7 +14,6 @@ const App = () => {
       ? JSON.parse(savedFeedback)
       : { good: 0, neutral: 0, bad: 0 };
   });
-  const [isHiden, setIsHiden] = useState(false);
 
   const updateFeedback = (feedbackType) => {
     setFeedback((prev) => {
@@ -22,14 +21,12 @@ const App = () => {
         ...prev,
         [feedbackType]: prev[feedbackType] + 1,
       };
-      setIsHiden(!isHiden);
       return updated;
     });
   };
 
   const handleResetFeedback = () => {
     setFeedback({ good: 0, neutral: 0, bad: 0 });
-    setIsHiden(isHiden);
   };
 
   useEffect(() => {
@@ -37,7 +34,10 @@ const App = () => {
   }, [feedback]);
 
   const totalFeedback = feedback.good + feedback.neutral + feedback.bad;
-  const positiveFeedback = Math.round((feedback.good / totalFeedback) * 100);
+  const positiveFeedback = parseFloat(
+    ((feedback.good / totalFeedback) * 100).toFixed(2)
+  );
+
   return (
     <>
       <Description />
@@ -48,9 +48,11 @@ const App = () => {
       />
       {totalFeedback > 0 ? (
         <>
-          <Feedback feedback={feedback} />
-          <p>Total: {totalFeedback}</p>
-          <p>Positive: {positiveFeedback}%</p>
+          <Feedback
+            feedback={feedback}
+            totalFeedback={totalFeedback}
+            positiveFeedback={positiveFeedback}
+          />
         </>
       ) : (
         <Notification notif="No feedback given yet." />
